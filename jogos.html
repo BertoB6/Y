@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZonaXP - Jogos Disponíveis</title>
+
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(90deg, #ff004f, #8000ff);
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.game-card {
+    background: #111;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255,0,100,0.3);
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(255,0,100,0.6);
+}
+
+.game-images {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.game-images img {
+    width: 48%;
+    border-radius: 10px;
+}
+
+.game-info {
+    padding: 20px;
+}
+
+.game-info h2 {
+    margin-top: 0;
+    color: #ff004f;
+}
+
+.game-info p {
+    margin: 8px 0;
+}
+
+.download-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    background: #8000ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.download-btn:hover {
+    background: #ff004f;
+    transform: scale(1.05);
+}
+
+@media (max-width:600px){
+    header {
+        font-size: 1.5rem;
+    }
+    .game-images img {
+        width: 100%;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>ZonaXP - Jogos Disponíveis</header>
+
+<div class="container">
+
+    <!-- eFootball 2026 -->
+    <div class="game-card">
+        <div class="game-images">
+            <img src="img1.jpg" alt="eFootball 2026 PSP Screenshot 1">
+            <img src="img2.jpg" alt="eFootball 2026 PSP Screenshot 2">
+        </div>
+        <div class="game-info">
+            <h2>eFootball 2026 - PSP (Offline)</h2>
+            <p><strong>Plataforma:</strong> PSP / Emulador</p>
+            <p><strong>Tamanho:</strong> 500 MB</p>
+            <p><strong>Descrição:</strong> Jogue eFootball 2026 offline no seu celular ou emulador PSP. Compatível com celulares fracos e médios. Download seguro via MediaFire.</p>
+            <a class="download-btn" href="https://www.mediafire.com/file/exemplo/efootball2026.iso/file" target="_blank">Baixar Agora</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
