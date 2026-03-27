@@ -1,61 +1,459 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZonaXP - Jogo Grátis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif; }
-    body { background:#0d0d0d; color:#fff; line-height:1.6; }
-    header {
-      display:flex; align-items:center; justify-content:center;
-      padding:30px 20px;
-      background: linear-gradient(90deg, #ff0000, #8b00ff);
-      position: sticky; top:0; z-index:1000;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>ZonaXP - Jogos PSP e Mobile</title>
+<meta name="description" content="Distribuição de jogos para PSP, Android e iOS. Downloads gratuitos e premium.">
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(255,0,79,0.3);
+}
+
+.menu-icon, .search-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 40px;
+    text-align: center;
+}
+
+.menu-icon:hover, .search-icon:hover {
+    color: #ff004f;
+    transform: scale(1.1);
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff004f, #8000ff, #00ff9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+}
+
+/* MENU LATERAL */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: #111;
+    z-index: 1001;
+    transition: 0.3s;
+    padding: 80px 20px 20px;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+    border-right: 1px solid #ff004f;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+.side-menu h3 {
+    color: #ff004f;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ff004f;
+}
+
+.side-menu ul {
+    list-style: none;
+}
+
+.side-menu li {
+    padding: 15px 0;
+    border-bottom: 1px solid #222;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.side-menu li:hover {
+    color: #ff004f;
+    padding-left: 10px;
+}
+
+.close-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #ff004f;
+}
+
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    display: none;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* BARRA DE PESQUISA - OCULTA POR PADRÃO */
+.search-bar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: #111;
+    padding: 15px 20px;
+    z-index: 1000;
+    display: none;
+    border-bottom: 1px solid #ff004f;
+    animation: slideDown 0.3s ease;
+}
+
+.search-bar.active {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
     }
-    header img { width:60px; height:60px; margin-right:15px; transition: transform 0.3s; }
-    header img:hover { transform: rotate(15deg); }
-    header h1 { font-size:2rem; color:#fff; text-shadow:2px 2px 5px rgba(0,0,0,0.7); }
-    .hero { text-align:center; padding:80px 20px; background: linear-gradient(to bottom, #1a1a1a, #2a2a2a); animation: fadeIn 1.5s ease-in-out; }
-    .hero h2 { font-size:2rem; color:#ff0000; margin-bottom:15px; text-shadow:1px 1px 3px rgba(0,0,0,0.7); }
-    .hero p { font-size:1.2rem; color:#ccc; max-width:700px; margin:0 auto 30px auto; }
-    .hero a {
-      display:inline-block; padding:15px 30px; font-size:1.1rem;
-      color:#fff; background:#8b00ff; border-radius:50px;
-      text-decoration:none; transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    .hero a:hover { background:#ff0000; transform:scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.6); }
-    footer { text-align:center; padding:30px 20px; background:#111; color:#888; font-size:0.9rem; border-top:2px solid #8b00ff; }
-    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-    @media (max-width:768px){ header h1{ font-size:1.5rem; } .hero h2{ font-size:1.5rem; } .hero p{ font-size:1rem; } }
-  </style>
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px;
+    background: #222;
+    border: 1px solid #ff004f;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #8000ff;
+}
+
+.search-bar input::placeholder {
+    color: #888;
+}
+
+/* GRID DE JOGOS - 2 COLUNAS */
+.container {
+    margin-top: 80px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid rgba(255,0,79,0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #ff004f;
+    box-shadow: 0 5px 20px rgba(255,0,79,0.3);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin: 10px 0 5px;
+    color: #fff;
+}
+
+.card .categoria {
+    font-size: 0.85rem;
+    color: #ff004f;
+    margin-bottom: 8px;
+    display: inline-block;
+    background: rgba(255,0,79,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.card .plataforma {
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 12px;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.btn {
+    margin-top: 8px;
+    padding: 10px;
+    background: linear-gradient(90deg, #ff004f, #8000ff);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(255,0,79,0.4);
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    display: none;
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    border: 1px solid #ff004f;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popup-content h3 {
+    color: #ff004f;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.popup-content .preco-info {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255,0,79,0.1);
+    border-radius: 10px;
+}
+
+.popup-content .preco-info p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #00ff9c;
+}
+
+.popup-content button {
+    margin-top: 12px;
+    padding: 12px;
+    border: none;
+    background: linear-gradient(90deg, #ff004f, #8000ff);
+    color: white;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.popup-content button:hover {
+    transform: scale(1.02);
+}
+
+.popup-content .btn-fechar {
+    background: #333;
+}
+
+.popup-content .btn-fechar:hover {
+    background: #444;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 40px;
+    padding: 30px;
+    text-align: center;
+    background: #111;
+    border-top: 1px solid rgba(255,0,79,0.3);
+}
+
+footer a {
+    color: #00ff9c;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    color: #ff004f;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff004f;
+    border-radius: 4px;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .container {
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .card img {
+        height: 180px;
+    }
+    
+    .card h3 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    .card {
+        padding: 12px;
+    }
+    
+    .card img {
+        height: 160px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
 <header>
-  <img src="logo.png" alt="ZonaXP Logo">
-  <h1>ZonaXP</h1>
+    <div class="menu-icon" id="menuBtn">☰</div>
+    <div class="logo">ZonaXP</div>
+    <div class="search-icon" id="searchBtn">🔍</div>
 </header>
 
-<section class="hero">
-  <h2>🎮 Recebe o teu Jogo Grátis Agora! 🎮</h2>
-  <p>
-    Estamos a distribuir gratuitamente **um dos jogos mais jogados na Moçambique**!  
-    Clique no botão abaixo e receba o jogo direto no seu WhatsApp.  
-    Leva menos de 2 minutos para garantir o seu.
-  </p>
-  <!-- Botão que será linkado ao formulário -->
-  <a href="jogos.html" target="_blank">Receber Jogo Grátis</a>
-</section>
+<!-- MENU LATERAL -->
+<div class="side-menu" id="sideMenu">
+    <div class="close-menu" id="closeMenu">✕</div>
+    <h3>Menu</h3>
+    <ul>
+        <li id="menuHome">🏠 Home</li>
+        <li id="menuApresentacao">📖 Apresentação</li>
+        <li id="menuSuporte">🛡️ Suporte</li>
+    </ul>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- BARRA DE PESQUISA -->
+<div class="search-bar" id="searchBar">
+    <input type="text" id="searchInput" placeholder="🔍 Buscar jogos por nome ou categoria...">
+</div>
+
+<div class="container" id="games"></div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h3>💰 Jogo Premium</h3>
+        <div class="preco-info">
+            <p id="priceText"></p>
+        </div>
+        <button id="btnDownloadPremium">⬇️ Baixar Agora</button>
+        <button class="btn-fechar" onclick="fecharPopup()">✕ Fechar</button>
+    </div>
+</div>
 
 <footer>
-  &copy; 2026 ZonaXP - Todos os direitos reservados
-
-  <a href="https://whatsapp.com/channel/0029Vb7YAqi3bbV9tuuiyC1p" Seguir WhatsApp</a>
+    <p>📲 <a href="https://wa.me/258858112264" target="_blank">Entrar no nosso canal WhatsApp</a></p>
+    <p style="margin-top: 10px; font-size: 0.8rem;">© 2026 ZonaXP - Todos os direitos reservados</p>
 </footer>
+
+<script src="script.js"></script>
+<script src="https://t.contentsquare.net/uxa/f9b9a680731cb.js"></script>
 
 </body>
 </html>
